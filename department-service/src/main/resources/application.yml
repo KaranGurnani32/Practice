@@ -1,0 +1,6 @@
+server:
+  port: 9001
+  # server name
+spring:
+  application:
+    name: DEPARTMENT-SERVICE
