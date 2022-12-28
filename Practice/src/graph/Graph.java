@@ -47,17 +47,17 @@ public class Graph {
 
         Queue<Integer> queue = new LinkedList<>();
 
-        int current = source;
-        queue.offer(current);
-        visited.set(current, true);
+        int current = source; // source is in current
+        queue.offer(current); // it is put inside queue
+        visited.set(current, true); // it is declared visited
         while(!queue.isEmpty()) {
-            current = queue.poll();
-            if(!visited.get(current)) {
+            current = queue.poll(); // the first element added is taken out
+            if(!visited.get(current)) { // if it is not visited then add it to seq and mark visited
                 sequence.add(current);
                 visited.set(current, true);
             }
-            for(Integer neighbour: adjacencyList.get(current)) {
-                if(!visited.get(neighbour)) {
+            for(Integer neighbour: adjacencyList.get(current)) { // if visited then put its neighbours in queue
+                if(!visited.get(neighbour)) {                    // if they are not visited
                     queue.offer(neighbour);
                 }
             }
