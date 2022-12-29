@@ -3,20 +3,35 @@ package graphpractice;
 import java.util.*;
 
 public class Graph {
+    /*
+    * Make adjacency list, choose data type acc to question
+    * Add default constructor
+    * Creating method to add edges
+    * printing the list
+    * Creating main method and adding edges
+    * */
 
     Map<Node, List<Node>> adjacencyList;
 
-    public Graph() {
-        this.adjacencyList = new HashMap<>();
+    Map<Edge, Integer> cost;
+
+    public Graph() { // Creating default constructor (it gets invoked automatically)
+        this.adjacencyList = new HashMap<>(); // initializing adjacency list
+        this.cost = new HashMap<>(); // initializing cost
     }
 
-    void addEdge(Node source, Node destination) {
+    void addEdge(String sourceString, String destinationString, Integer weight) {
+        Node source = new Node(sourceString);
+        Node destination = new Node(destinationString);
         if (adjacencyList.containsKey(source)) {
             adjacencyList.get(source).add(destination);
         } else {
             adjacencyList.put(source, new LinkedList<>());
             adjacencyList.get(source).add(destination);
         }
+
+        Edge edge = new Edge(source, destination);
+        cost.put(edge, weight);
     }
 
     List<Node> bfs(Node source) {
@@ -70,10 +85,15 @@ public class Graph {
         return result;
     }
 
-    void printGraph() {
+    void printAdjacencyList() {
         System.out.println("-----------------------");
-        for (Map.Entry entry : adjacencyList.entrySet()) {
-            System.out.println(entry.getKey() + " --> " + entry.getValue());
+        for (Map.Entry<Node, List<Node>> entry : adjacencyList.entrySet()) {
+            Node key = entry.getKey();
+            StringBuilder valueString = new StringBuilder();
+            for (Node value : entry.getValue()) {
+                valueString.append(value).append("(").append(cost.get(new Edge(key, value))).append("), ");
+            }
+            System.out.println(key + " --> " + valueString);
         }
         System.out.println("-----------------------");
     }
@@ -82,30 +102,59 @@ public class Graph {
         Graph graph = new Graph();
 
 
-        graph.addEdge(new Node("Karan"), new Node("Kanishk"));
-        graph.addEdge(new Node("Karan"), new Node("Akkshay"));
-        graph.addEdge(new Node("Karan"), new Node("DJ"));
-        graph.addEdge(new Node("Karan"), new Node("Chintu"));
-        graph.addEdge(new Node("Kanishk"), new Node("Pragati"));
-        graph.addEdge(new Node("Kanishk"), new Node("DJ"));
-        graph.addEdge(new Node("Kanishk"), new Node("Radhika"));
-        graph.addEdge(new Node("Radhika"), new Node("Muskan"));
-        graph.addEdge(new Node("Radhika"), new Node("Pragati"));
-        graph.addEdge(new Node("Pragati"), new Node("Kanishk"));
-        graph.addEdge(new Node("Pragati"), new Node("Karan"));
-        graph.addEdge(new Node("DJ"), new Node("Karan"));
-        graph.addEdge(new Node("DJ"), new Node("Kanishk"));
-        graph.addEdge(new Node("DJ"), new Node("Pragati"));
-        graph.addEdge(new Node("Akkshay"), new Node("Karan"));
-        graph.addEdge(new Node("Akkshay"), new Node("Kanishk"));
-        graph.addEdge(new Node("Akkshay"), new Node("Chintu"));
-        graph.addEdge(new Node("Chintu"), new Node("Karan"));
-        graph.addEdge(new Node("Muskan"), new Node("Karan"));
+//        graph.addEdge(new Node("Karan"), new Node("Kanishk"));
+//        graph.addEdge(new Node("Karan"), new Node("Akkshay"));
+//        graph.addEdge(new Node("Karan"), new Node("DJ"));
+//        graph.addEdge(new Node("Karan"), new Node("Chintu"));
+//        graph.addEdge(new Node("Kanishk"), new Node("Pragati"));
+//        graph.addEdge(new Node("Kanishk"), new Node("DJ"));
+//        graph.addEdge(new Node("Kanishk"), new Node("Radhika"));
+//        graph.addEdge(new Node("Radhika"), new Node("Muskan"));
+//        graph.addEdge(new Node("Radhika"), new Node("Pragati"));
+//        graph.addEdge(new Node("Pragati"), new Node("Kanishk"));
+//        graph.addEdge(new Node("Pragati"), new Node("Karan"));
+//        graph.addEdge(new Node("DJ"), new Node("Karan"));
+//        graph.addEdge(new Node("DJ"), new Node("Kanishk"));
+//        graph.addEdge(new Node("DJ"), new Node("Pragati"));
+//        graph.addEdge(new Node("Akkshay"), new Node("Karan"));
+//        graph.addEdge(new Node("Akkshay"), new Node("Kanishk"));
+//        graph.addEdge(new Node("Akkshay"), new Node("Chintu"));
+//        graph.addEdge(new Node("Chintu"), new Node("Karan"));
+//        graph.addEdge(new Node("Muskan"), new Node("Karan"));
 
-        graph.printGraph();
+        graph.addEdge("Rithala","Rohini West", 5);
+        graph.addEdge("Rohini West","Rohini East", 10);
+        graph.addEdge("Rohini East","Peeragadhi", 25);
+        graph.addEdge("Peeragadhi","Paschim Vihar", 15);
+        graph.addEdge("Paschim Vihar","Karol Bagh", 20);
 
-        System.out.println(graph.bfs(new Node("Karan")));
-        System.out.println(graph.dfs(new Node("Karan")));
+        graph.printAdjacencyList();
 
+//        System.out.println(graph.bfs(new Node("Karan")));
+//        System.out.println(graph.dfs(new Node("Karan")));
+
+    }
+}
+
+class Edge {
+    Node source;
+    Node destination;
+
+    public Edge(Node source, Node destination) {
+        this.source = source;
+        this.destination = destination;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Edge edge = (Edge) o;
+        return source.equals(edge.source) && destination.equals(edge.destination);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(source, destination);
     }
 }
