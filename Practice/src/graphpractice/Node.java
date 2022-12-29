@@ -2,7 +2,8 @@ package graphpractice;
 
 import java.util.Objects;
 
-public class Node {
+public class Node { // Created Node as a data type so that we can use whatever
+                    // data type inside it like int or String
     String data;
 
     public Node(String data) {
