@@ -9,6 +9,11 @@ public class Graph {
     * Creating method to add edges
     * printing the list
     * Creating main method and adding edges
+    * To further make it a weighted graph we need to declare another variable
+    * In this the edges are not same
+    * We need to initialize it in constructor
+    * make code for weighted edges
+    * add code for printing it
     * */
 
     Map<Node, List<Node>> adjacencyList;
